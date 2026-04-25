@@ -87,7 +87,7 @@ function App() {
             </div>
             <div className="flex flex-col leading-none">
               <span className="text-[10px] text-[#646669] ml-1 uppercase tracking-wider">live inference monitor</span>
-              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#d1d0c5]">Long Horizon Memory Dashboard</h1>
+              <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-[#d1d0c5]">Long Horizon Memory Dashboard v2.1</h1>
             </div>
           </div>
           <div className="hidden sm:flex gap-3 ml-2 text-[#646669]">

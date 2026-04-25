@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { AgentState, TrainingLog } from '../types';
 
-const PLAYBACK_INTERVAL_MS = 5000;
+const PLAYBACK_INTERVAL_MS = 800;
 const MAX_BUFFERED_EVENTS = 500;
 
 export const useAgentData = () => {

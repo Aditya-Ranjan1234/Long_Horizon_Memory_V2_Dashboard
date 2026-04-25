@@ -50,14 +50,14 @@ def broadcast_sync(data_type: str, payload: Dict[str, Any]):
             from server.app import manager  # type: ignore
         except Exception:
             from app import manager  # type: ignore
+        event_payload = {"type": data_type, "payload": payload}
         if manager and manager.active_connections:
-            # We are in a sync environment, so we need to run the async broadcast
-            loop = asyncio.get_event_loop()
-            if loop.is_running():
-                loop.create_task(manager.enrichment_broadcast({
-                    "type": data_type,
-                    "payload": payload
-                }))
+            # Works both inside async handlers and plain sync execution.
+            try:
+                loop = asyncio.get_running_loop()
+                loop.create_task(manager.enrichment_broadcast(event_payload))
+            except RuntimeError:
+                asyncio.run(manager.enrichment_broadcast(event_payload))
     except Exception:
         pass
 

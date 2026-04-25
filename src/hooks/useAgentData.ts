@@ -146,9 +146,13 @@ export const useAgentData = () => {
       ws.current.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
+          console.log("[WS] Received raw data:", data);
           const normalized = normalizeStateEvent(data);
           if (normalized) {
+            console.log("[WS] Enqueuing normalized state:", normalized);
             enqueueState(normalized);
+          } else {
+            console.warn("[WS] Could not normalize event:", data);
           }
         } catch (e) {
           console.error("[WS] Error parsing message:", e);

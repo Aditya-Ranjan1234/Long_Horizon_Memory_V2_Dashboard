@@ -9,25 +9,22 @@ export const useAgentData = () => {
 
   useEffect(() => {
     const connect = () => {
-      // 1. Try local/vercel backend first
-      // 2. If it fails or if we are on Vercel (which doesn't support WS), 
-      //    we can provide a direct HF fallback.
+      // In production deploys we consume the HF stream directly.
+      // Local development can still use the local backend proxy.
       const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-      
-      // If we are on vercel.app, we might want to default to direct HF connection
-      // since Vercel doesn't support WebSockets for the backend.
-      const isVercel = window.location.hostname.includes('vercel.app');
+      const hostname = window.location.hostname;
+      const isLocalDev = hostname === 'localhost' || hostname === '127.0.0.1';
       const hfWsUrl = "wss://aditya-ranjan1234-long-horizon-memory-v2.hf.space/ws/monitor";
       
-      const wsUrl = isVercel 
-        ? hfWsUrl 
-        : `${protocol}//${window.location.host}/api/ws/monitor`;
+      const wsUrl = isLocalDev
+        ? `${protocol}//${window.location.host}/api/ws/monitor`
+        : hfWsUrl;
       
       console.log(`[WS] Attempting connection to: ${wsUrl}`);
       ws.current = new WebSocket(wsUrl);
 
       ws.current.onopen = () => {
-        console.log(`[WS] Connected to ${isVercel ? 'HF Space' : 'Agent Backend'}`);
+        console.log(`[WS] Connected to ${isLocalDev ? 'Agent Backend' : 'HF Space'}`);
         setConnected(true);
       };
 

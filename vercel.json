@@ -19,11 +19,7 @@
       "destination": "api/index.py"
     },
     {
-      "source": "/assets/(.*)",
-      "destination": "/assets/$1"
-    },
-    {
-      "source": "/((?!api/).*)",
+      "source": "/((?!api/|assets/|favicon.ico|vite.svg).*)",
       "destination": "/index.html"
     }
   ]

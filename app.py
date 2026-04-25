@@ -169,8 +169,10 @@ app = create_app(
 
 # --- Serve custom UI if available ---
 def mount_custom_ui(app, dist_path):
-    # Remove existing /web routes to override default UI
-    app.routes = [r for r in app.routes if getattr(r, "path", None) != "/web"]
+    # Remove existing /web routes to override default UI (in-place mutation)
+    new_routes = [r for r in app.routes if getattr(r, "path", None) != "/web"]
+    app.routes.clear()
+    app.routes.extend(new_routes)
     print(f"[SERVER] Mounting custom UI from {dist_path}")
     app.mount("/web", StaticFiles(directory=dist_path, html=True), name="custom_web")
 

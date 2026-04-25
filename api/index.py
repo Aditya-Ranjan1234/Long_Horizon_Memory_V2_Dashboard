@@ -1,5 +1,5 @@
 import importlib.util
-from pathlib import Path
+from pathlib import Path 
 
 
 def _load_ui_app():
@@ -8,6 +8,7 @@ def _load_ui_app():
 
     Vercel also has a top-level `app.py` in this repository, and plain
     `from app import app` may resolve to the wrong module.
+    
     """
     repo_root = Path(__file__).resolve().parent.parent
     ui_app_path = repo_root / "ui" / "app.py"

@@ -14,6 +14,7 @@ export interface AgentState {
 
 export interface TrainingLog {
   timestamp: string;
+  step?: number;
   loss?: number;
   reward: number;
   fmt_reward?: number;

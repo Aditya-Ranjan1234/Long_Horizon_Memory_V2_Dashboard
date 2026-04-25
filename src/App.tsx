@@ -25,14 +25,11 @@ import { useAgentData } from './hooks/useAgentData';
 function App() {
   const { agentState, logs, connected } = useAgentData();
   const [renderedMessage, setRenderedMessage] = useState('');
-  const [renderedLogs, setRenderedLogs] = useState<typeof logs>([]);
   const [actionTransition, setActionTransition] = useState('awaiting');
   const [lastOperation, setLastOperation] = useState<string | null>(null);
 
   // Demo typing speed control (ms per character).
   const TYPING_SPEED_MS = 24;
-  // Demo graph/action-history pacing.
-  const LOG_RENDER_INTERVAL_MS = 320;
 
   // MonkeyType Serika Dark Palette
   const colors = {
@@ -63,18 +60,6 @@ function App() {
   }, [agentState?.new_message]);
 
   useEffect(() => {
-    const interval = window.setInterval(() => {
-      setRenderedLogs((prev) => {
-        if (prev.length >= logs.length) return prev;
-        const next = logs.slice(0, prev.length + 1);
-        return next.length > 50 ? next.slice(-50) : next;
-      });
-    }, LOG_RENDER_INTERVAL_MS);
-
-    return () => window.clearInterval(interval);
-  }, [logs]);
-
-  useEffect(() => {
     const currentOp = agentState?.operation ?? null;
     if (!currentOp) return;
     if (!lastOperation) {
@@ -88,7 +73,7 @@ function App() {
     }
   }, [agentState?.operation, lastOperation]);
 
-  const chartData = useMemo(() => renderedLogs, [renderedLogs]);
+  const chartData = useMemo(() => logs, [logs]);
 
   return (
     <div className="min-h-screen w-full flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 gap-8 font-mono overflow-x-hidden selection:bg-[#e2b714] selection:text-[#323437]">
@@ -226,7 +211,7 @@ function App() {
             </div>
             <div className="flex flex-col gap-2">
               <AnimatePresence mode="popLayout">
-                {renderedLogs.slice().reverse().slice(0, 6).map((log) => (
+                {logs.slice().reverse().slice(0, 6).map((log) => (
                   <motion.div 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}

@@ -57,8 +57,37 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 # Create the app with web interface and README integration
+def get_monitored_env_class(manager):
+    class MonitoredEnv(LongHorizonMemoryEnvironment):
+        def step(self, action: LongHorizonMemoryAction) -> LongHorizonMemoryObservation:
+            obs = super().step(action)
+            try:
+                # Convert to dict and broadcast
+                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
+                data["operation"] = action.operation
+                # We use a thread-safe way to schedule the async broadcast
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    loop.create_task(manager.enrichment_broadcast(data))
+            except Exception as e:
+                print(f"[BROADCAST ERROR] {e}")
+            return obs
+
+        def reset(self) -> LongHorizonMemoryObservation:
+            obs = super().reset()
+            try:
+                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
+                data["operation"] = "reset"
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    loop.create_task(manager.enrichment_broadcast(data))
+            except Exception as e:
+                print(f"[BROADCAST ERROR] {e}")
+            return obs
+    return MonitoredEnv
+
 app = create_app(
-    LongHorizonMemoryEnvironment,
+    get_monitored_env_class(manager),
     LongHorizonMemoryAction,
     LongHorizonMemoryObservation,
     env_name="long_horizon_memory",

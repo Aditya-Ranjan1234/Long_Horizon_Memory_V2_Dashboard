@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-color: #323437;
+  --main-color: #e2b714;
+  --caret-color: #e2b714;
+  --sub-color: #646669;
+  --sub-alt-color: #2c2e31;
+  --text-color: #d1d0c5;
+  --error-color: #ca4754;
+  --error-extra-color: #7e2a33;
+  --colorful-error-color: #ca4754;
+  --colorful-error-extra-color: #7e2a33;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: 'Roboto Mono', 'JetBrains Mono', monospace;
+  margin: 0;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+@layer components {
+  .mt-card {
+    @apply bg-transparent p-4 transition-all duration-200;
+  }
+  
+  .mt-text-main {
+    color: var(--main-color);
+  }
+  
+  .mt-text-sub {
+    color: var(--sub-color);
+  }
+  
+  .mt-text-text {
+    color: var(--text-color);
+  }
+
+  .mt-bg-sub-alt {
+    background-color: var(--sub-alt-color);
+  }
+
+  .scrollbar-mt::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-mt::-webkit-scrollbar-track {
+    background: var(--sub-alt-color);
+  }
+
+  .scrollbar-mt::-webkit-scrollbar-thumb {
+    background: var(--sub-color);
+    border-radius: 3px;
+  }
+
+  .scrollbar-mt::-webkit-scrollbar-thumb:hover {
+    background: var(--main-color);
+  }
+}

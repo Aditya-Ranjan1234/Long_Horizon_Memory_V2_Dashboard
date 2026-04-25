@@ -1,0 +1,15 @@
+# Core dependencies for Long Horizon Memory Environment
+openenv-core[core,web]>=0.2.3
+fastapi>=0.115.0
+uvicorn>=0.24.0
+openai>=1.30.0
+jinja2
+aiofiles
+gradio
+
+# Additional dependencies for robust deployment
+python-dotenv
+requests
+pydantic>=2.0.0
+websockets
+httpx

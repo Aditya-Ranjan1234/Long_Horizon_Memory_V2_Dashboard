@@ -1,0 +1,749 @@
+[{
+  "episode_id": "hotpot_oberoi_001",
+  "conversation_domain": "general_knowledge",
+  "difficulty": "medium",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "The Ritz-Carlton Jakarta is a hotel and skyscraper in Jakarta, Indonesia.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "The Oberoi family is an Indian family that is famous for its involvement in hotels.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "The Hotel Tallcorn is located in Marshalltown, Iowa.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "The Oberoi Group is a hotel company with its head office in Delhi.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "Future Fibre Technologies is a fiber optic sensing company based in Melbourne.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 5,
+      "text": "Rai Bahadur Mohan Singh Oberoi was the founder of Oberoi Hotels & Resorts.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "The 289th Military Police Company was activated in 1994.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "The Oberoi Group owns and operates luxury hotels across multiple countries.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "Ishqbaaaz is an Indian television drama series broadcast on Star Plus.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "The Glennwanis Hotel is located in Glennville, Georgia.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Oberoi family is involved in hotels"
+    },
+    {
+      "id": 1,
+      "text": "Oberoi Group head office is in Delhi"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "The Oberoi family is part of a hotel company that has a head office in what city?",
+      "answer": "Delhi",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_oberoi_002",
+  "conversation_domain": "general",
+  "difficulty": "hard",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "The Ritz-Carlton Jakarta is located in Jakarta and is one of the tallest buildings in the city.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "The Oberoi family is known for its involvement in the hospitality industry through hotel businesses.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "Another luxury hotel chain operates its headquarters from Mumbai.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "The Glennwanis Hotel is a historic hotel located in Georgia.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 4,
+      "text": "Future Fibre Technologies has offices in multiple global cities including New Delhi.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 5,
+      "text": "The Oberoi Group is a hotel company headquartered in Delhi.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 6,
+      "text": "I am planning to renovate my kitchen next month.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "Hotel Tallcorn was built in 1928 in Marshalltown, Iowa.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "Mohan Singh Oberoi founded one of India's largest hotel chains.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "The Bond Hotel once faced bankruptcy due to competition from newer hotels.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 10,
+      "text": "Many hotel companies operate internationally with headquarters in major cities.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 11,
+      "text": "Ishqbaaaz is a TV show that features characters from the Oberoi family.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Oberoi family is associated with hotel businesses"
+    },
+    {
+      "id": 1,
+      "text": "Oberoi Group is headquartered in Delhi"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "The Oberoi family is part of a hotel company that has a head office in what city?",
+      "answer": "Delhi",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_pascal_003",
+  "conversation_domain": "history_science",
+  "difficulty": "medium",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "The city of Lyon is famous for its old town and cuisine.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "Blaise Pascal was a French mathematician, physicist, and inventor.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "A random cafe in Paris introduced a seasonal menu this spring.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Pascal was born in Clermont-Ferrand in central France.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "The museum ticket prices were reduced for students this month.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 5,
+      "text": "The SI unit of pressure is named the pascal in his honor.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "A football club changed coaches after a poor season.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "Clermont-Ferrand is located in France.",
+      "isRelevant": true,
+      "fact_id": 2
+    },
+    {
+      "id": 8,
+      "text": "A restaurant review said the desserts were excellent.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "One local tram line was delayed due to maintenance.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Blaise Pascal was French"
+    },
+    {
+      "id": 1,
+      "text": "Pascal was born in Clermont-Ferrand"
+    },
+    {
+      "id": 2,
+      "text": "Clermont-Ferrand is in France"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "Blaise Pascal was born in Clermont-Ferrand, which is in what country?",
+      "answer": "France",
+      "supporting_fact_ids": [1, 2]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_volta_004",
+  "conversation_domain": "science_history",
+  "difficulty": "hard",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "A local weather station reported strong winds near the coast.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "Alessandro Volta invented the voltaic pile, an early electric battery.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "Several students bought new calculators before exams.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Volta was born in Como.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "A documentary about ocean life aired last night.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 5,
+      "text": "Como is a city in Italy.",
+      "isRelevant": true,
+      "fact_id": 2
+    },
+    {
+      "id": 6,
+      "text": "The robotics club is planning a competition.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "The volt unit is named after Volta.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "Several tourists visited Lake Como over the weekend.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "A bookstore promoted a sale on science biographies.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 10,
+      "text": "Some batteries use lithium chemistry, unlike Volta's original design.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 11,
+      "text": "A city marathon route passed by the old railway station.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Alessandro Volta was born in Como"
+    },
+    {
+      "id": 1,
+      "text": "Como is in Italy"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "Alessandro Volta was born in Como, which is in what country?",
+      "answer": "Italy",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_manga_005",
+  "conversation_domain": "literature_geography",
+  "difficulty": "medium",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "A shipping company opened a new route across the Pacific.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "The manga One Piece was created by Eiichiro Oda.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "A bakery launched a seasonal strawberry tart this week.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Eiichiro Oda is from Japan.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "A travel blog highlighted beaches in Okinawa.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 5,
+      "text": "Many readers discuss character arcs online.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "A commuter rail line added two late-night trains.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "One Piece began serialization in Weekly Shonen Jump.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "A local library hosted a reading challenge for teens.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "An anime convention announced guest speakers for summer.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "One Piece was created by Eiichiro Oda"
+    },
+    {
+      "id": 1,
+      "text": "Eiichiro Oda is from Japan"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "The creator of One Piece is from what country?",
+      "answer": "Japan",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_nobel_006",
+  "conversation_domain": "biography_science",
+  "difficulty": "hard",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "A city theater announced an extended run of a new play.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "Alfred Nobel founded the Nobel Prizes.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "A cafe near the station now opens earlier on weekdays.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Alfred Nobel was born in Stockholm.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "Stockholm is the capital of Sweden.",
+      "isRelevant": true,
+      "fact_id": 2
+    },
+    {
+      "id": 5,
+      "text": "A sports channel covered highlights from a hockey match.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "Nobel also held patents related to explosives.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "A park renovation project started near the central library.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "Some tourists took a ferry tour through the archipelago.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "The Nobel Foundation manages prize administration.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 10,
+      "text": "A nearby train service reported temporary delays.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 11,
+      "text": "A food market added several new local vendors.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Alfred Nobel was born in Stockholm"
+    },
+    {
+      "id": 1,
+      "text": "Stockholm is in Sweden"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "Alfred Nobel was born in Stockholm, which is in what country?",
+      "answer": "Sweden",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_tesla_007",
+  "conversation_domain": "inventors_history",
+  "difficulty": "medium",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "A new science exhibit opened at the city museum.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "Nikola Tesla contributed to alternating current power systems.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "A hardware store announced discounts on home tools.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Tesla was born in Smiljan.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "Smiljan is in modern-day Croatia.",
+      "isRelevant": true,
+      "fact_id": 2
+    },
+    {
+      "id": 5,
+      "text": "A local electronics fair attracted many student teams.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "High-voltage demonstrations require strict safety protocols.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "A bookstore featured a biography reading event.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "Some engineering students built a small Tesla coil for class.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "Public transit schedules changed due to road repairs.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Nikola Tesla was born in Smiljan"
+    },
+    {
+      "id": 1,
+      "text": "Smiljan is in Croatia"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "Nikola Tesla was born in Smiljan, which is in what country?",
+      "answer": "Croatia",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+},
+{
+  "episode_id": "hotpot_curie_008",
+  "conversation_domain": "science_biography",
+  "difficulty": "hard",
+
+  "messages": [
+    {
+      "id": 0,
+      "text": "A university lab upgraded its safety equipment this semester.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 1,
+      "text": "Marie Curie conducted pioneering research on radioactivity.",
+      "isRelevant": true,
+      "fact_id": 0
+    },
+    {
+      "id": 2,
+      "text": "A nearby cafe introduced a new lunch menu.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 3,
+      "text": "Marie Curie was born in Warsaw.",
+      "isRelevant": true,
+      "fact_id": 1
+    },
+    {
+      "id": 4,
+      "text": "Warsaw is the capital of Poland.",
+      "isRelevant": true,
+      "fact_id": 2
+    },
+    {
+      "id": 5,
+      "text": "A train station renovation is expected to finish next year.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 6,
+      "text": "Curie later worked in Paris for much of her career.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 7,
+      "text": "The chemistry department hosted an outreach event for schools.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 8,
+      "text": "A local team won a regional science quiz competition.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 9,
+      "text": "Several students visited a museum exhibit on atomic physics.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 10,
+      "text": "A weather advisory predicted rain across the city.",
+      "isRelevant": false,
+      "fact_id": null
+    },
+    {
+      "id": 11,
+      "text": "Marie Curie won Nobel Prizes in both physics and chemistry.",
+      "isRelevant": false,
+      "fact_id": null
+    }
+  ],
+
+  "key_facts": [
+    {
+      "id": 0,
+      "text": "Marie Curie was born in Warsaw"
+    },
+    {
+      "id": 1,
+      "text": "Warsaw is in Poland"
+    }
+  ],
+
+  "questions": [
+    {
+      "question": "Marie Curie was born in Warsaw, which is in what country?",
+      "answer": "Poland",
+      "supporting_fact_ids": [0, 1]
+    }
+  ]
+}
+]

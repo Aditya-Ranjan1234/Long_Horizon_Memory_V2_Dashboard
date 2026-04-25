@@ -44,7 +44,12 @@ except (ImportError, ModuleNotFoundError):
 def broadcast_sync(data_type: str, payload: Dict[str, Any]):
     """Helper to broadcast data to the WebSocket manager if available."""
     try:
-        from server.app import manager
+        # In the monorepo runtime this can be `server.app`, while in the
+        # standalone UI/Vercel deployment it is `app`.
+        try:
+            from server.app import manager  # type: ignore
+        except Exception:
+            from app import manager  # type: ignore
         if manager and manager.active_connections:
             # We are in a sync environment, so we need to run the async broadcast
             loop = asyncio.get_event_loop()

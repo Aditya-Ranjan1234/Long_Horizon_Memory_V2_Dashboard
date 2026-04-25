@@ -11,7 +11,7 @@ def _load_ui_app():
     
     """
     repo_root = Path(__file__).resolve().parent.parent
-    ui_app_path = repo_root / "ui" / "app.py"
+    ui_app_path = repo_root / "app.py"
 
     if not ui_app_path.exists():
         raise FileNotFoundError(f"Could not find UI app module at: {ui_app_path}")

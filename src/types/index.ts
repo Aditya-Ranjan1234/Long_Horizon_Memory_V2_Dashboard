@@ -19,4 +19,6 @@ export interface TrainingLog {
   fmt_reward?: number;
   env_reward?: number;
   episode: number;
+  operation?: 'append' | 'rewrite' | 'noop';
+  memory_count?: number;
 }

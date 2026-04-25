@@ -180,11 +180,11 @@ function App() {
                   >
                     <div className="flex items-center gap-4">
                       <span className="text-[10px] text-[#646669]">{log.timestamp.split('T')[1].split('.')[0]}</span>
-                      <span className="text-sm font-bold text-[#d1d0c5] uppercase tracking-wider">{log.operation}</span>
+                      <span className="text-sm font-bold text-[#d1d0c5] uppercase tracking-wider">{log.operation || 'step'}</span>
                     </div>
                     <div className="flex gap-6 text-[10px] text-[#646669]">
                       <span>REW: <span className="text-[#e2b714]">{log.reward.toFixed(3)}</span></span>
-                      <span>MEM: {log.memory_count}</span>
+                      <span>MEM: {log.memory_count || 0}</span>
                     </div>
                   </motion.div>
                 ))}

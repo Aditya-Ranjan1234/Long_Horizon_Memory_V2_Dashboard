@@ -168,10 +168,16 @@ app = create_app(
 )
 
 # --- Serve custom UI if available ---
+def mount_custom_ui(app, dist_path):
+    # Remove existing /web routes to override default UI
+    app.routes = [r for r in app.routes if getattr(r, "path", None) != "/web"]
+    print(f"[SERVER] Mounting custom UI from {dist_path}")
+    app.mount("/web", StaticFiles(directory=dist_path, html=True), name="custom_web")
+
+# Primary path (Project Root)
 ui_dist_path = os.path.join(os.path.dirname(__file__), "dist")
 if os.path.exists(ui_dist_path):
-    print(f"[SERVER] Mounting custom UI from {ui_dist_path}")
-    app.mount("/web", StaticFiles(directory=ui_dist_path, html=True), name="custom_web")
+    mount_custom_ui(app, ui_dist_path)
 else:
     print(f"[SERVER] Custom UI dist not found at {ui_dist_path}")
 

@@ -23,7 +23,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAgentData } from './hooks/useAgentData';
 
 function App() {
-  const { agentState, logs, connected } = useAgentData();
+  const { agentState, logs, connected, memoryHistory } = useAgentData();
   const [renderedMessage, setRenderedMessage] = useState('');
   const [actionTransition, setActionTransition] = useState('awaiting');
   const [lastOperation, setLastOperation] = useState<string | null>(null);
@@ -241,7 +241,28 @@ function App() {
               <span>active_memory</span>
             </div>
             <div className="p-4 bg-[#2c2e31] rounded-lg border border-[#323437] min-h-[220px] max-h-[420px] overflow-y-auto scrollbar-mt text-xs leading-loose text-[#646669] break-words">
-              {agentState?.memory || "No active memory sequences stored."}
+              {agentState?.memory ? (
+                <div className="mb-4">
+                  <div className="text-[10px] uppercase tracking-wider text-[#9a9ca1] mb-2">current_memory</div>
+                  <div>{agentState.memory}</div>
+                </div>
+              ) : (
+                <div>No active memory sequences stored.</div>
+              )}
+
+              {memoryHistory.length > 0 && (
+                <div className="mt-4 border-t border-[#3a3c40] pt-3 space-y-3">
+                  <div className="text-[10px] uppercase tracking-wider text-[#9a9ca1]">stored_memory_history</div>
+                  {memoryHistory.slice().reverse().map((entry) => (
+                    <div key={`${entry.timestamp}-${entry.step}`} className="rounded border border-[#3a3c40] bg-[#27292c] p-2">
+                      <div className="text-[10px] text-[#8a8c91] mb-1">
+                        step {entry.step} | {entry.timestamp.slice(11, 19)}
+                      </div>
+                      <div>{entry.memory}</div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

@@ -7,17 +7,38 @@ const MAX_BUFFERED_EVENTS = 500;
 export const useAgentData = () => {
   const [agentState, setAgentState] = useState<AgentState | null>(null);
   const [logs, setLogs] = useState<TrainingLog[]>([]);
+  const [memoryHistory, setMemoryHistory] = useState<Array<{ timestamp: string; step: number; memory: string }>>([]);
   const [connected, setConnected] = useState(false);
   const ws = useRef<WebSocket | null>(null);
   const pendingStatesRef = useRef<AgentState[]>([]);
   const nextSyntheticStepRef = useRef(1);
   const lastRenderedTimestampRef = useRef<string>('');
+  const lastEnqueuedSignatureRef = useRef<string>('');
+
+  const buildStateSignature = (state: AgentState) =>
+    [
+      state.step,
+      state.operation,
+      state.reward.toFixed(4),
+      state.memory_count,
+      state.new_message,
+      state.memory,
+      state.done ? '1' : '0',
+      state.task_score.toFixed(4),
+      state.fact_coverage.toFixed(4),
+      state.qa_similarity.toFixed(4),
+    ].join('|');
 
   const enqueueState = (state: AgentState) => {
     const q = pendingStatesRef.current;
+    const stateSig = buildStateSignature(state);
+    if (stateSig === lastEnqueuedSignatureRef.current) return;
+
     const lastQueued = q[q.length - 1];
     if (lastQueued && lastQueued.timestamp === state.timestamp) return;
+
     q.push(state);
+    lastEnqueuedSignatureRef.current = stateSig;
     if (q.length > MAX_BUFFERED_EVENTS) {
       q.splice(0, q.length - MAX_BUFFERED_EVENTS);
     }
@@ -53,7 +74,7 @@ export const useAgentData = () => {
       task_score: Number(observation?.metadata?.task_score ?? payload?.task_score ?? 0),
       fact_coverage: Number(observation?.metadata?.fact_coverage ?? payload?.fact_coverage ?? 0),
       qa_similarity: Number(observation?.metadata?.qa_similarity ?? payload?.qa_similarity ?? 0),
-      timestamp: String(payload?.timestamp ?? new Date().toISOString()),
+      timestamp: String(payload?.timestamp ?? ''),
     };
   };
 
@@ -62,25 +83,44 @@ export const useAgentData = () => {
       const nextState = pendingStatesRef.current.shift();
       if (!nextState) return;
 
-      if (nextState.timestamp === lastRenderedTimestampRef.current) return;
-      lastRenderedTimestampRef.current = nextState.timestamp;
+      const effectiveTimestamp = nextState.timestamp || new Date().toISOString();
+      if (effectiveTimestamp === lastRenderedTimestampRef.current) return;
+      lastRenderedTimestampRef.current = effectiveTimestamp;
 
-      setAgentState(nextState);
+      const renderedState: AgentState = {
+        ...nextState,
+        timestamp: effectiveTimestamp,
+      };
+
+      setAgentState(renderedState);
       setLogs((prev) => {
         const nextLog: TrainingLog = {
-          timestamp: nextState.timestamp,
-          step: nextState.step,
-          reward: nextState.reward,
-          env_reward: nextState.reward,
-          fmt_reward: nextState.fact_coverage,
-          episode: Math.floor(nextState.step / 10),
-          operation: nextState.operation,
-          memory_count: nextState.memory_count,
+          timestamp: renderedState.timestamp,
+          step: renderedState.step,
+          reward: renderedState.reward,
+          env_reward: renderedState.reward,
+          fmt_reward: renderedState.fact_coverage,
+          episode: Math.floor(renderedState.step / 10),
+          operation: renderedState.operation,
+          memory_count: renderedState.memory_count,
         };
         const lastLog = prev[prev.length - 1];
         if (lastLog && lastLog.timestamp === nextLog.timestamp) return prev;
         return [...prev.slice(-49), nextLog];
       });
+
+      if (renderedState.memory.trim()) {
+        setMemoryHistory((prev) => {
+          const last = prev[prev.length - 1];
+          if (last && last.memory === renderedState.memory) return prev;
+          const next = [...prev, {
+            timestamp: renderedState.timestamp,
+            step: renderedState.step,
+            memory: renderedState.memory,
+          }];
+          return next.slice(-20);
+        });
+      }
     }, PLAYBACK_INTERVAL_MS);
 
     const connect = () => {
@@ -136,5 +176,5 @@ export const useAgentData = () => {
     };
   }, []);
 
-  return { agentState, logs, connected };
+  return { agentState, logs, connected, memoryHistory };
 };

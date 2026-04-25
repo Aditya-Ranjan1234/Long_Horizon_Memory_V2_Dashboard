@@ -90,9 +90,13 @@ class ConnectionManager:
     async def connect(self, websocket: WebSocket):
         await websocket.accept()
         self.active_connections.append(websocket)
-        # Start HF proxy task if not already running
-        if not self.hf_task or self.hf_task.done():
-            self.hf_task = asyncio.create_task(self.proxy_hf_updates())
+        # Only start HF proxy task if not already running AND not on HF Space
+        is_hf = os.environ.get("SPACE_ID") is not None
+        if not is_hf:
+            if not self.hf_task or self.hf_task.done():
+                self.hf_task = asyncio.create_task(self.proxy_hf_updates())
+        else:
+            print("[SERVER] Running on HF Space, skipping self-proxy.")
 
     def disconnect(self, websocket: WebSocket):
         if websocket in self.active_connections:

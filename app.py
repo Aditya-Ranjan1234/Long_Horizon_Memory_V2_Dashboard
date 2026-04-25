@@ -64,8 +64,19 @@ class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
         self.hf_task = None
+        self.loop = None
+        try:
+            self.loop = asyncio.get_event_loop()
+        except Exception:
+            pass
 
     async def enrichment_broadcast(self, data: dict):
+        if not self.loop:
+            try:
+                self.loop = asyncio.get_running_loop()
+            except Exception:
+                pass
+
         if "timestamp" not in data:
             data["timestamp"] = datetime.now().isoformat()
         
@@ -110,16 +121,25 @@ manager = ConnectionManager()
 # Create the app with web interface and README integration
 def get_monitored_env_class(manager):
     class MonitoredEnv(LongHorizonMemoryEnvironment):
+        def _broadcast(self, data: dict):
+            if manager.loop:
+                manager.loop.call_soon_threadsafe(
+                    lambda: asyncio.create_task(manager.enrichment_broadcast(data))
+                )
+            else:
+                try:
+                    loop = asyncio.get_event_loop()
+                    if loop.is_running():
+                        loop.create_task(manager.enrichment_broadcast(data))
+                except Exception:
+                    pass
+
         def step(self, action: LongHorizonMemoryAction) -> LongHorizonMemoryObservation:
             obs = super().step(action)
             try:
-                # Convert to dict and broadcast
                 data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
                 data["operation"] = action.operation
-                # We use a thread-safe way to schedule the async broadcast
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(manager.enrichment_broadcast(data))
+                self._broadcast(data)
             except Exception as e:
                 print(f"[BROADCAST ERROR] {e}")
             return obs
@@ -129,9 +149,7 @@ def get_monitored_env_class(manager):
             try:
                 data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
                 data["operation"] = "reset"
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(manager.enrichment_broadcast(data))
+                self._broadcast(data)
             except Exception as e:
                 print(f"[BROADCAST ERROR] {e}")
             return obs

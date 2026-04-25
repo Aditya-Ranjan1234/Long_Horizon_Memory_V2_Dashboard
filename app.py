@@ -56,52 +56,6 @@ from fastapi import WebSocket, WebSocketDisconnect
 from fastapi.staticfiles import StaticFiles
 import os
 
-# Create the app with web interface and README integration
-def get_monitored_env_class(manager):
-    class MonitoredEnv(LongHorizonMemoryEnvironment):
-        def step(self, action: LongHorizonMemoryAction) -> LongHorizonMemoryObservation:
-            obs = super().step(action)
-            try:
-                # Convert to dict and broadcast
-                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
-                data["operation"] = action.operation
-                # We use a thread-safe way to schedule the async broadcast
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(manager.enrichment_broadcast(data))
-            except Exception as e:
-                print(f"[BROADCAST ERROR] {e}")
-            return obs
-
-        def reset(self) -> LongHorizonMemoryObservation:
-            obs = super().reset()
-            try:
-                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
-                data["operation"] = "reset"
-                loop = asyncio.get_event_loop()
-                if loop.is_running():
-                    loop.create_task(manager.enrichment_broadcast(data))
-            except Exception as e:
-                print(f"[BROADCAST ERROR] {e}")
-            return obs
-    return MonitoredEnv
-
-app = create_app(
-    get_monitored_env_class(manager),
-    LongHorizonMemoryAction,
-    LongHorizonMemoryObservation,
-    env_name="long_horizon_memory",
-    max_concurrent_envs=1,
-)
-
-# --- Serve custom UI if available ---
-ui_dist_path = os.path.join(os.path.dirname(__file__), "dist")
-if os.path.exists(ui_dist_path):
-    print(f"[SERVER] Mounting custom UI from {ui_dist_path}")
-    app.mount("/web", StaticFiles(directory=ui_dist_path, html=True), name="custom_web")
-else:
-    print(f"[SERVER] Custom UI dist not found at {ui_dist_path}")
-
 import httpx
 import websockets
 
@@ -152,6 +106,52 @@ class ConnectionManager:
                 await asyncio.sleep(5)
 
 manager = ConnectionManager()
+
+# Create the app with web interface and README integration
+def get_monitored_env_class(manager):
+    class MonitoredEnv(LongHorizonMemoryEnvironment):
+        def step(self, action: LongHorizonMemoryAction) -> LongHorizonMemoryObservation:
+            obs = super().step(action)
+            try:
+                # Convert to dict and broadcast
+                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
+                data["operation"] = action.operation
+                # We use a thread-safe way to schedule the async broadcast
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    loop.create_task(manager.enrichment_broadcast(data))
+            except Exception as e:
+                print(f"[BROADCAST ERROR] {e}")
+            return obs
+
+        def reset(self) -> LongHorizonMemoryObservation:
+            obs = super().reset()
+            try:
+                data = obs.model_dump() if hasattr(obs, "model_dump") else obs.dict()
+                data["operation"] = "reset"
+                loop = asyncio.get_event_loop()
+                if loop.is_running():
+                    loop.create_task(manager.enrichment_broadcast(data))
+            except Exception as e:
+                print(f"[BROADCAST ERROR] {e}")
+            return obs
+    return MonitoredEnv
+
+app = create_app(
+    get_monitored_env_class(manager),
+    LongHorizonMemoryAction,
+    LongHorizonMemoryObservation,
+    env_name="long_horizon_memory",
+    max_concurrent_envs=1,
+)
+
+# --- Serve custom UI if available ---
+ui_dist_path = os.path.join(os.path.dirname(__file__), "dist")
+if os.path.exists(ui_dist_path):
+    print(f"[SERVER] Mounting custom UI from {ui_dist_path}")
+    app.mount("/web", StaticFiles(directory=ui_dist_path, html=True), name="custom_web")
+else:
+    print(f"[SERVER] Custom UI dist not found at {ui_dist_path}")
 
 @app.websocket("/ws/monitor")
 async def websocket_endpoint(websocket: WebSocket):

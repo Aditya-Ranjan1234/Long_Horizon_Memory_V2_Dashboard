@@ -19,12 +19,8 @@
       "destination": "api/index.py"
     },
     {
-      "source": "/assets/:path*",
-      "destination": "/assets/:path*"
-    },
-    {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/$1"
     }
   ]
 }

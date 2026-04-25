@@ -53,6 +53,8 @@ import json
 import asyncio
 from typing import List
 from fastapi import WebSocket, WebSocketDisconnect
+from fastapi.staticfiles import StaticFiles
+import os
 
 # Create the app with web interface and README integration
 app = create_app(
@@ -62,6 +64,14 @@ app = create_app(
     env_name="long_horizon_memory",
     max_concurrent_envs=1,
 )
+
+# --- Serve custom UI if available ---
+ui_dist_path = os.path.join(os.path.dirname(__file__), "dist")
+if os.path.exists(ui_dist_path):
+    print(f"[SERVER] Mounting custom UI from {ui_dist_path}")
+    app.mount("/web", StaticFiles(directory=ui_dist_path, html=True), name="custom_web")
+else:
+    print(f"[SERVER] Custom UI dist not found at {ui_dist_path}")
 
 import httpx
 import websockets

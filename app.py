@@ -71,20 +71,19 @@ class ConnectionManager:
             pass
 
     async def enrichment_broadcast(self, data: dict):
-        if not self.loop:
-            try:
-                self.loop = asyncio.get_running_loop()
-            except Exception:
-                pass
-
         if "timestamp" not in data:
             data["timestamp"] = datetime.now().isoformat()
         
         message = json.dumps(data)
+        client_count = len(self.active_connections)
+        if client_count > 0:
+            print(f"[BROADCAST] Sending update to {client_count} clients")
+            
         for connection in self.active_connections:
             try:
                 await connection.send_text(message)
-            except Exception:
+            except Exception as e:
+                print(f"[BROADCAST ERROR] {e}")
                 pass
 
     async def connect(self, websocket: WebSocket):

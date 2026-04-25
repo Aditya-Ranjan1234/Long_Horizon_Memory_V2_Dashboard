@@ -6,6 +6,7 @@ export const useAgentData = () => {
   const [logs, setLogs] = useState<TrainingLog[]>([]);
   const [connected, setConnected] = useState(false);
   const ws = useRef<WebSocket | null>(null);
+  const lastStepRef = useRef(0);
 
   useEffect(() => {
     const connect = () => {
@@ -31,14 +32,64 @@ export const useAgentData = () => {
       ws.current.onmessage = (event) => {
         try {
           const data = JSON.parse(event.data);
-          if (data.type === 'agent_state') {
-            setAgentState(data.payload);
-          } else if (data.type === 'training_log') {
+          const payload = data?.payload ?? data;
+          const messageType = data?.type ?? '';
+
+          // Preferred typed stream emitted by environment broadcast.
+          if (messageType === 'agent_state' && payload) {
+            setAgentState(payload);
+            if (typeof payload.step === 'number') {
+              lastStepRef.current = payload.step;
+            }
+            return;
+          }
+
+          if (messageType === 'training_log' && payload) {
             setLogs(prev => {
-              // Avoid duplicate logs if they come in too fast
               const lastLog = prev[prev.length - 1];
-              if (lastLog && lastLog.timestamp === data.payload.timestamp) return prev;
-              return [...prev.slice(-49), data.payload];
+              if (lastLog && lastLog.timestamp === payload.timestamp) return prev;
+              return [...prev.slice(-49), payload];
+            });
+            return;
+          }
+
+          // Fallback for untyped/raw messages: map step-like payloads to UI model.
+          const observation = payload?.observation ?? payload;
+          const hasStepFields = observation && (
+            Object.prototype.hasOwnProperty.call(observation, 'new_message') ||
+            Object.prototype.hasOwnProperty.call(observation, 'memory') ||
+            Object.prototype.hasOwnProperty.call(payload, 'reward')
+          );
+
+          if (hasStepFields) {
+            const nextStep = (lastStepRef.current || 0) + 1;
+            const normalizedState = {
+              step: nextStep,
+              operation: payload?.operation ?? 'noop',
+              reward: Number(payload?.reward ?? observation?.reward ?? 0),
+              memory_count: Number(observation?.memory_count ?? 0),
+              new_message: String(observation?.new_message ?? ''),
+              memory: String(observation?.memory ?? ''),
+              done: Boolean(payload?.done ?? observation?.done ?? false),
+              task_score: Number(observation?.metadata?.task_score ?? payload?.task_score ?? 0),
+              fact_coverage: Number(observation?.metadata?.fact_coverage ?? payload?.fact_coverage ?? 0),
+              qa_similarity: Number(observation?.metadata?.qa_similarity ?? payload?.qa_similarity ?? 0),
+              timestamp: String(payload?.timestamp ?? new Date().toISOString()),
+            };
+
+            lastStepRef.current = nextStep;
+            setAgentState(normalizedState);
+            setLogs(prev => {
+              const log = {
+                timestamp: normalizedState.timestamp,
+                reward: normalizedState.reward,
+                episode: Math.floor(nextStep / 10),
+                operation: normalizedState.operation,
+                memory_count: normalizedState.memory_count,
+              };
+              const lastLog = prev[prev.length - 1];
+              if (lastLog && lastLog.timestamp === log.timestamp) return prev;
+              return [...prev.slice(-49), log];
             });
           }
         } catch (e) {

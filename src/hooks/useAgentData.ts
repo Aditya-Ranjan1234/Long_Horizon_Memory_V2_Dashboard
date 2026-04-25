@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { AgentState, TrainingLog } from '../types';
 
-const PLAYBACK_INTERVAL_MS = 800;
+const PLAYBACK_INTERVAL_MS = 100;
 const MAX_BUFFERED_EVENTS = 500;
 
 export const useAgentData = () => {
@@ -84,6 +84,7 @@ export const useAgentData = () => {
       if (!nextState) return;
 
       const effectiveTimestamp = nextState.timestamp || new Date().toISOString();
+      console.log(`[UI] Rendering state for step ${nextState.step} at ${effectiveTimestamp}`);
       if (effectiveTimestamp === lastRenderedTimestampRef.current) return;
       lastRenderedTimestampRef.current = effectiveTimestamp;
 

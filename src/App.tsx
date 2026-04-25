@@ -126,7 +126,7 @@ function App() {
         </div>
         
         <div className="lg:col-span-9 h-[230px] sm:h-[280px] w-full min-w-0 relative rounded-md bg-[#2c2e31]/35 border border-[#3a3c40] p-2">
-          <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={180}>
+          <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={180} debounce={1}>
             <LineChart data={chartData}>
               <XAxis dataKey="step" hide />
               <YAxis hide domain={['auto', 'auto']} />
